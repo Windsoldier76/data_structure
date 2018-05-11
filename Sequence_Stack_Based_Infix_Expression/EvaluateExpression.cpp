@@ -1,35 +1,34 @@
-//基于栈的中缀算术表达式求值
+#include <iostream>
+#include <stdlib.h>
+#include <iomanip>
+
 #define MAXSIZE 10000
 #define INSIZE 50
 #define Status int
 #define OK 1
 #define ERROR 0
 
-#include <iostream>
-#include <stdlib.h>
-#include <iomanip>
-
 using namespace std;
 
-//顺序栈定义
+//Sequence stack define
 typedef struct
 {
 	char *base;
-    char *top;
+	char *top;
 	int stacksize;
 }SqStack;
 
-//顺序数栈定义
+//Number stack define
 typedef struct
 {
-    double *base;
-    double *top;
-    int stacksize;
+	double *base;
+	double *top;
+	int stacksize;
 }SqNumStack;
 
-//初始化栈
+//initialize Sequence stack
 Status InitStack(SqStack &S)
-{//操作结果：构造一个空栈S
+{//operating conditions: Sequence stack exist
 	S.base = new char[MAXSIZE];
 	if(S.base)
 	{
@@ -41,7 +40,7 @@ Status InitStack(SqStack &S)
 		return ERROR;
 }
 
-//初始化数栈
+//initialize Number stack
 Status InitNumberStack(SqNumStack &S)
 {
 	S.base = new double[MAXSIZE];
@@ -56,16 +55,17 @@ Status InitNumberStack(SqNumStack &S)
 
 }
 
-//入栈
+//push char in Sequence stack
 Status Push(SqStack &S, char c)
 {
 	if(S.top - S.base == S.stacksize)
 		return ERROR;
 	*S.top++ = c;
+	//S.top;
 	return OK;
 }
 
-//入数栈
+//push double in Number stack
 Status NumberPush(SqNumStack &S, double d)
 {
 	if(S.top - S.base == S.stacksize)
@@ -74,7 +74,7 @@ Status NumberPush(SqNumStack &S, double d)
 	return OK;
 }
 
-//出栈
+//pop char from Sequence stack
 Status Pop(SqStack &S, char &c)
 {
 	if(S.top == S.base)
@@ -83,7 +83,7 @@ Status Pop(SqStack &S, char &c)
 	return OK;
 }
 
-//出数栈
+//pop double from Number stack
 Status NumberPop(SqNumStack &S, double &d)
 {
 	if(S.top == S.base)
@@ -92,21 +92,21 @@ Status NumberPop(SqNumStack &S, double &d)
 	return OK;
 }
 
-//取栈顶元素
+//get the top of Sequence stack
 char GetTop(SqStack S)
 {
 	if(S.top != S.base)
 		return *(S.top - 1);
 }
 
-//取数栈顶元素
+//get the top of Number stack
 double GetNumberTop(SqNumStack S)
 {
 	if(S.top != S.base)
 		return *(S.top - 1);
 }
 
-//判断读入字符是否为运算符
+//judge parameter is the opertor or not
 Status In(char c)
 {
 	if(c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '=')
@@ -115,19 +115,19 @@ Status In(char c)
 		return ERROR;
 }
 
-//判断两个运算符优先级
+//judge the priority of two operator
 char Precede(char a, char b)
 {
 	switch(a)
 	{
 	case '+':
-		if(b == '*' || b == '/')
+		if(b == '*' || b == '/' || b == '(')
 			return '<';
 		else
 			return '>';
 		break;
 	case '-':
-		if(b == '*' || b == '/')
+		if(b == '*' || b == '/' || b == '(')
 			return '<';
 		else
 			return '>';
@@ -150,7 +150,7 @@ char Precede(char a, char b)
 		else if(b == '#')
 			return '#';
 		else
-			return '>';
+			return '<';
 		break;
 	case ')':
 		if(b == '(')
@@ -169,7 +169,7 @@ char Precede(char a, char b)
 	return '#';
 }
 
-//进行二元运算
+//operation
 double Operate(double a, char b, double c)
 {
 	switch(b)
@@ -185,32 +185,47 @@ double Operate(double a, char b, double c)
 	}
 }
 
-//中缀算术表达式
+//infix arithmetic expression
 double EvaluateExpression(int *p)
 {
-    SqStack OPTR;
-    SqNumStack OPND;
-    char ch;
+	SqStack OPTR;
+	SqNumStack OPND;
+	char ch;
 	InitNumberStack(OPND);
 	InitStack(OPTR);
 	Push(OPTR,'#');
 	cin >> ch;
 	if(ch == '=')
 	{
-		*p++;
-		return NULL;
+		(*p)++;
+		return 0;
 	}
+
+	char a[MAXSIZE] = { '\0' };
+	int i = 0;
 	while(ch != '=' || GetTop(OPTR) != '#')
 	{
 		if(!In(ch))
 		{
-			char *a;
-			a = &ch;
-			double b = atof(a);
-			NumberPush(OPND, b);
-			cin >> ch;
+			while (!In(ch))
+			{
+				a[i] = ch;			  //save ch into array
+				i++;
+				cin >> ch;
+			}
+			char *c = a;
+			double d = atof(c);       //transform array to double
+			NumberPush(OPND, d);      //push double into stack
+			while (i >= 0)            //initialize array for next read
+			{
+				a[i] = '\0';
+				i--;
+			}
+			i = 0;                    //initialize i for next read
 		}
 		else
+		{
+
 			switch(Precede(GetTop(OPTR), ch))
 			{
 			case '<':
@@ -218,21 +233,20 @@ double EvaluateExpression(int *p)
 				cin >> ch;
 				break;
 			case '>':
-			    char theta;
-			    double a,b;
+				char theta;
+				double a, b;
 				Pop(OPTR, theta);
 				NumberPop(OPND,b);
 				NumberPop(OPND,a);
 				NumberPush(OPND, Operate(a, theta, b));
 				break;
 			case '=':
-			    char x;
+				char x;
 				Pop(OPTR, x);
 				cin >> ch;
 				break;
-			case '#':
-				return '#';
 			}
+		}
 	}
 	return GetNumberTop(OPND);
 }
@@ -240,24 +254,23 @@ double EvaluateExpression(int *p)
 int main()
 {
 	double answer[INSIZE];
-	int i, j;
-	i = j = 0;
+	int i, j, n;
+	i = j = n = 0;
 	int *p;
 	p = &j;
-	cout << "====================" << endl;
-	cout << "欢迎使用Wind计算器" << endl;
-	cout << "====================" << endl;
-	cout << "请输入你要计算的表达式：" << endl;
+	cout << "==============================" << endl;
+	cout << "Welcome to use Wind calculator" << endl;
+	cout << "==============================" << endl;
+	cout << "please input the expression you want to calculate" << endl;
 	while(j != 1)
 	{
 		answer[i] = EvaluateExpression(p);
 		++i;
 	}
-	i = 0;
-	while(answer[i] == NULL)
-    {
-		cout << setiosflags(ios::fixed) << setprecision(2) << answer[i] << endl;
-        ++i;
-    }
+	while(answer[n] != 0)
+	{
+		cout << setiosflags(ios::fixed) << setprecision(2) << answer[n] << endl;
+		++n;
+	}
 	return 0;
 }
