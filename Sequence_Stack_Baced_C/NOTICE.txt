@@ -1,0 +1,1 @@
+the Sequence_Stack_Usual_Opreate.c has not run on my machine i don't know it's right or not
