@@ -23,7 +23,15 @@
   <body>
     <h1>Welcome My Path of Learning Data Structure</h1>
     <p>
-      <a href="https://github.com/Windsoldier76/data_structure">Click here to see my code.</a>
+      <a href="https://github.com/Windsoldier76/data_structure">Click here to see my code.</a><br>
+      <ul>
+        {% for post in site.posts %}
+        <li>
+          <a href="{{ post.url }}">{{ post.title }}</a>
+          {{ post.excerpt }}
+        </li>
+        {% endfor %}
+      </ul>
     </p>
   </body>
 </html>

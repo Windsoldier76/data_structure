@@ -1,0 +1,9 @@
+theme: jekyll-theme-hacker
+
+future: true
+baseurl: data_structure
+encoding: utf-8
+
+markdown: kramdown
+kramdown:
+  input: GFM
