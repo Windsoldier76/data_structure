@@ -17,11 +17,12 @@ layout: default
   <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
   <script>
     var gitment = new Gitment({
-    owner: 'Windsoldier76',
-    repo: 'data_structure',
-    oauth: {
-      client_id: 'd3af1706e5d2782b4942',
-      client_secret: '8082b72160e8484a155dd850c8ad26eac2bd840a',
+      id: '<%= page.date %>'
+      owner: 'Windsoldier76',
+      repo: 'data_structure',
+      oauth: {
+        client_id: 'd3af1706e5d2782b4942',
+        client_secret: '8082b72160e8484a155dd850c8ad26eac2bd840a',
       },
     })
     gitment.render('container')
