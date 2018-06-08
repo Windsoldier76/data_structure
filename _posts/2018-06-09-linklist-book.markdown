@@ -857,9 +857,7 @@ int main()
 }
 ```
 
-# This code can run so please try it yourself!
-
-here is some books you can put in
+# here is some books you can put in
 ```
 9787302257646 程序设计基础 25.00
 9787302164340 程序设计基础（第2版） 20.00
