@@ -55,7 +55,7 @@ BSTree SearchBST(BSTree T, KeyType key)
 	while (true)
 	{
 		if (T)
-			cout << "compare with" << T->data.key << endl;
+			cout << "compare with " << T->data.key << endl;
 		if ((!T) || key == T->data.key)
 			return T;
 		else if (key < T->data.key)

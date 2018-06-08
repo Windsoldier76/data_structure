@@ -1,0 +1,27 @@
+input:
+4 19 10 1 28 6 13 5 12 7 0
+6
+n
+14
+y
+
+output:
+please input the tree nodes
+4 19 10 1 28 6 13 5 12 7 0
+please input the key M :
+6
+compare with 4
+compare with 19
+compare with 10
+compare with 6
+01307F18
+want exit?(y/n)
+n
+please input the key M :
+14
+compare with 4
+compare with 19
+compare with 10
+compare with 13
+00000000
+want exit?(y/n)

@@ -88,6 +88,8 @@ void ShortestPath_DIJ(AMGraph G, int v0)
 			}//if
 	}//for
 
+	cout << "===========================" << endl;
+
 	for (int i = 1; i < n; ++i)
 	{
 		int w = 0, j = i;
