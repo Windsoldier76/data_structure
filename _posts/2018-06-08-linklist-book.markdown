@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "Linklist Book Management System"
-date: 2018-06-09
+date: 2018-06-08
 categories:
 ---
 
-[View Code on Github](https://github.com/Windsoldier76/data_structure)
+[View Code on Github](https://github.com/Windsoldier76/data_structure/tree/master/Data_Structure_Code/Link_Lisk_Book_Manage_System)
 
 # Source Code
 ```
