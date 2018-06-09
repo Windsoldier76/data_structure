@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Virus Detection Based on BF and KMP"
-date: 2018-06-02 10:20:00
+date: 2018-06-09 10:20:00
 categories:
 ---
 

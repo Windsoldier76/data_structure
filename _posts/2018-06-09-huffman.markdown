@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Huffman Tree and Huffman Code"
-date: 2018-06-04 10:55:00
+date: 2018-06-09 10:55:00
 categories:
 ---
 

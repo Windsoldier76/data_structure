@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Binary Sort Tree"
-date: 2018-06-07 11:10:00
+date: 2018-06-09 11:10:00
 categories:
 ---
 

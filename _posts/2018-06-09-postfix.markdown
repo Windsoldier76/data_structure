@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Postfix Expression Based on Sequence Stack"
-date: 2018-06-01 10:10:00
+date: 2018-06-09 10:10:00
 categories:
 ---
 
