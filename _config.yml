@@ -9,7 +9,9 @@ twitter_username: username
 github_username: Windsoldier76
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown
+kramdown:
+  input: GFM
 markdown_ext:  markdown,mkdown,mkdn,mkd,md
 future: true
 
