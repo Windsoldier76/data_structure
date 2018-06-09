@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Dijsktra Algorithm"
-date: 2018-06-09 11:20:00+0000
+date: 2018-06-09 11:20:00
 categories:
 ---
 

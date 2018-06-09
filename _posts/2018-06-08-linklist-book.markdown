@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Linklist Book Management System"
-date: 2018-06-08 22:00:00+0000
+date: 2018-06-08 22:00:00
 categories:
 ---
 

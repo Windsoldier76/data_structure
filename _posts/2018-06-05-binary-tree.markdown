@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Basic Operation of Binary Tree"
-date: 2018-06-09 11:00:00+0000
+date: 2018-06-05 11:00:00
 categories:
 ---
 

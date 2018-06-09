@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Infix Expression Based on Sequence Stack"
-date: 2018-06-09 02:00:00+0000
+date: 2018-05-31 02:00:00
 categories:
 ---
 

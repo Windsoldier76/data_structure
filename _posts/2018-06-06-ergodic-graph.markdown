@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Ergodic Graph and Minimal Spanning Tree"
-date: 2018-06-09 11:05:00+0000
+date: 2018-06-06 11:05:00
 categories:
 ---
 
