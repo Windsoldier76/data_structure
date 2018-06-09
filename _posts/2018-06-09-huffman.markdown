@@ -1,0 +1,260 @@
+---
+layout: post
+title: "Huffman Tree and Huffman Code"
+date: 2018-06-09 10:55:00+0000
+categories:
+---
+
+# Source Code
+
+```
+//Huffman_Tree.cpp
+#include <iostream>
+
+#define MAXSIZE 255
+using namespace std;
+
+typedef struct
+{
+	int weight;
+	int parent, lchild, rchild;
+}HTNode, *HuffmanTree; //define the Huffman Tree
+
+typedef char ** HuffmanCode; //define the Huffman Code
+
+void Select(HuffmanTree HT, int i, int &s1, int &s2)
+{
+	int j;
+	for (j = 1; j <= i; ++j)
+		if (HT[s1].parent != 0)
+			++s1;
+	s2 = s1;//let s1 and s2 has no parents
+	for (j = 1; j <= i; ++j)
+	{
+		if (HT[j].parent == 0)
+			if (HT[j].weight < HT[s1].weight)
+				s1 = j;   //choose the smallest weight node
+	}
+
+	for (j = 1; j <= i; ++j)
+	{
+		if (HT[j].parent == 0)
+			if (HT[j].weight <= HT[s2].weight && j != s1)  //prevent s1 is same to s2
+				s2 = j;
+	}
+	return;
+}
+
+void CreateHuffmanTree(HuffmanTree &HT, int n, int weight[])
+{//create a huffman tree
+	if (n <= 1)
+		return;
+	int m = 2 * n - 1;
+	HT = new HTNode[m + 1];
+	for (int i = 1; i <= m; ++i)
+	{
+		HT[i].parent = 0;
+		HT[i].lchild = 0;
+		HT[i].rchild = 0;
+	}
+	int j = 0;
+	for (int i = 1; i <= n; ++i)
+	{
+		HT[i].weight = weight[j];
+		++j;
+	}//initialize work done
+
+	int s1, s2;
+	s1 = 1;
+	s2 = 1;
+	for (int i = n + 1; i <= m; ++i)
+	{
+		Select(HT, i - 1, s1, s2);
+		HT[s1].parent = i;
+		HT[s2].parent = i;
+		HT[i].lchild = s1;
+		HT[i].rchild = s2;
+		HT[i].weight = HT[s1].weight + HT[s2].weight;
+	}
+
+	cout << "------------------------------------" << endl;
+	cout << "|" << "node i" << "|" << "weight" << "|" << "parent" << "|" << "lchild" << "|" << "rchild" << "|" << endl;
+	for (int i = 1; i <= m; i++)
+	{
+		cout << "------------------------------------" << endl;
+		cout << "|  " << i << "   |  " << HT[i].weight << "   |  " << HT[i].parent << "   |  " << HT[i].lchild << "   |  " << HT[i].rchild << "   |" << endl;
+	}
+	cout << "------------------------------------" << endl; //output the Huffman Tree form
+}
+
+void GetWeight(char c[], int w[])
+{//get the weight for every character
+	int i = 0;
+	while (c[i] != '\0')
+	{
+		++w[(int)(c[i] - 97)];
+		++i;
+	}
+}
+
+void CreateHuffmanCode(HuffmanCode &HC, HuffmanTree HT, int n)
+{
+	HC = new char*[n + 1];
+	char *cd = new char[n];
+	cd[n - 1] = '\0';
+	for (int i = 1; i <= n; ++i)
+	{
+		int start = n - 1;
+		int c = i;
+		int f = HT[i].parent;
+		while (f != 0)
+		{
+			--start;
+			if (HT[f].lchild == c)
+				cd[start] = '0';
+			else
+				cd[start] = '1';
+			c = f;
+			f = HT[f].parent;
+		}
+		HC[i] = new char[n - start];
+		strcpy(HC[i],&cd[start]);
+	}
+	delete cd;
+}
+
+void Welcome()
+{//welcome to use
+	cout << "========================================" << endl;
+	cout << "Welcome to the Huffman Tree Code System" << endl;
+	cout << "========================================" << endl;
+}
+
+int main()
+{
+	int choose = 1;
+	int j = 0;
+	char c[MAXSIZE + 1][MAXSIZE + 1];
+
+	for (int i = MAXSIZE; i >= 0; --i)
+		for(int j = i;j>=0;--j)
+			c[j][i] = '\0';          //initialize the array
+
+
+	Welcome();
+
+	while (choose)
+	{
+		cout << "Please input the string you want to code" << endl;
+		cout << "----------------------------------------" << endl;
+		cin >> c[j];
+		while (c[j][0] != '0')
+		{
+			++j;
+			cin >> c[j];
+		}//input and save in array
+
+		cout << "----------------------------------------" << endl;
+		for (int i = 0; i < j; ++i)
+		{
+			int w[26];
+			for (int i = 0; i < 26; i++)
+				w[i] = 0;
+			HuffmanTree HT;
+			HuffmanCode HC;
+			int count = 0;
+
+			GetWeight(c[i], w);  //culculate the weight
+
+			for (int j = 0; j < 26; j++)
+				if (w[j] != 0)
+				{
+					cout << (char)(j + 97) << ":" << w[j] << " ";
+					++count;
+				}
+			cout << endl;  //output weight for every character
+			CreateHuffmanTree(HT, count, w);
+			CreateHuffmanCode(HC, HT, count);
+
+			cout << "The Huffman Code for every character is:" << endl;
+			for (int j = 1; j <= count; ++j)
+				cout << (char)(j + 96) << ":" << HC[j] << " ";
+			cout << endl;
+			cout << endl;
+			for (int j = 0; j < MAXSIZE; j++)
+			{
+				char temp = c[i][j];
+				if (temp == '\0')
+					break;
+				else
+					cout << HC[temp - 96];
+			}
+			cout << endl;
+			cout << endl;
+			cout << c[i] << endl;
+			cout << endl;
+		}
+
+		cout << "========================================" << endl;
+		cout << "Do you want to exit?" << endl;
+		cout << "1.Stay" << endl;
+		cout << "0.Exit" << endl;
+		cout << "----------------------------------------" << endl;
+		cin >> choose;
+		cout << "========================================" << endl;
+	}
+	return 0;
+}
+```
+
+# Input
+
+```
+aaaaaaabbbbbccdddd
+aabccc
+0
+```
+
+# Output
+
+```
+a:7 b:5 c:2 d:4
+------------------------------------
+|node i|weight|parent|lchild|rchild|
+------------------------------------
+|  1   |  7   |  7   |  0   |  0   |
+------------------------------------
+|  2   |  5   |  6   |  0   |  0   |
+------------------------------------
+|  3   |  2   |  5   |  0   |  0   |
+------------------------------------
+|  4   |  4   |  5   |  0   |  0   |
+------------------------------------
+|  5   |  6   |  6   |  3   |  4   |
+------------------------------------
+|  6   |  11   |  7   |  2   |  5   |
+------------------------------------
+|  7   |  18   |  0   |  1   |  6   |
+------------------------------------
+a:0 b:10 c:110 d:111
+00000001010101010110110111111111111
+aaaaaaabbbbbccdddd
+a:2 b:1 c:3
+------------------------------------
+|node i|weight|parent|lchild|rchild|
+------------------------------------
+|  1   |  2   |  4   |  0   |  0   |
+------------------------------------
+|  2   |  1   |  4   |  0   |  0   |
+------------------------------------
+|  3   |  3   |  5   |  0   |  0   |
+------------------------------------
+|  4   |  3   |  5   |  2   |  1   |
+------------------------------------
+|  5   |  6   |  0   |  3   |  4   |
+------------------------------------
+a:11 b:10 c:0
+111110000
+aabccc
+
+```
