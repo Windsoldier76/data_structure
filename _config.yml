@@ -13,6 +13,7 @@ markdown: kramdown
 kramdown:
   input: GFM
 markdown_ext:  markdown,mkdown,mkdn,mkd,md
+future: true
 
 redcarpet:
   extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "fenced_code_blocks"]

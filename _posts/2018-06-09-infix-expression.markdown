@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Linklist Book Management System"
-date: 2018-06-09
+title: "Infix Expression Based on Sequence Stack"
+date: 2018-06-09 02:00:00+0000
 categories:
 ---
 
