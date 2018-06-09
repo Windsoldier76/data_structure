@@ -1,5 +1,5 @@
 # Site settings
-title: Windsoldier76
+title: Windsoldier76's Data Structure Learning Path
 email:
 description: > # this means to ignore newlines until "baseurl:"
   Windsoldier76 is an Overwatch fan
@@ -9,9 +9,7 @@ twitter_username: username
 github_username: Windsoldier76
 
 # Build settings
-markdown: kramdown
-kramdown:
-  input: GFM
+markdown: redcarpet
 markdown_ext:  markdown,mkdown,mkdn,mkd,md
 future: true
 
